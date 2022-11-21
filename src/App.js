@@ -8,7 +8,8 @@ function App() {
   
   const [walletAddress, setWalletAddress] = useState()
   const [contractInfo, setContractInfo] = useState({tokenName: "-",tokenSymbol: "-",totalSupply: "-"})
-  const [balanceInfo, setBalanceInfo] = useState({address: "-", balance: "-"});
+  const [balanceInfo, setBalanceInfo] = useState({address: "-", balance: "-"})
+  const [buttonText, setButtonText] = useState ('Connect Wallet')
 
   let [data, setData] =useState()
   let apiURL = 'https://raw.githubusercontent.com/balancer-labs/frontend-v2/master/public/data/voting-gauges.json'
@@ -44,20 +45,32 @@ function App() {
     setData(displayData)
   }
   
+  //useEffect() loads when page is first loaded
   useEffect(() => {
     pullJSON()
+    checkWalletonLoad()
   },[])
 
+  async function checkWalletonLoad() {
+    const accounts = await window.ethereum.request({method: 'eth_accounts'})
+      if (accounts.length) {
+        console.log('Your wallet is connected')
+        setWalletAddress(accounts[0])
+        setButtonText('Wallet Connected');
+      } else {
+        console.log("Metamask is not connected");
+      }
+  }
+  
   async function requestAccount() {
-    console.log('Requesting account...')
     if(window.ethereum) {
-      console.log('detected')
-
       try {
         const accounts = await window.ethereum.request({
           method: "eth_requestAccounts",
-        })
+        })     
         setWalletAddress(accounts[0])
+        window.ethereum.on('accountsChanged', requestAccount)
+        setButtonText('Wallet Connected');
       } catch(error) {
         console.log('Error connecting...')
       }
@@ -66,10 +79,9 @@ function App() {
     }
   }
 
+
   async function connectWallet() {
     if(typeof window.ethereum !== 'undefined') {
-      await requestAccount()
-
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const erc20 = new ethers.Contract(Vote_address, Vote_ABI, provider)
 
@@ -81,8 +93,7 @@ function App() {
         tokenName,
         tokenSymbol,
         totalSupply
-      })
-      
+      })      
     }
   }
 
@@ -111,36 +122,33 @@ function App() {
     await erc20.vote_for_many_gauge_weights(["0x79eF6103A513951a3b25743DB509E267685726B7","0x359EA8618c405023Fc4B98dAb1B01F373792a126","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"],[0,10000,0,0,0,0,0,0]);
   }
 
-
   return (
     <div className="App">
       <header className="App-header">
-        <p className="App-title">
+      <br />
+      <button onClick={requestAccount}>{buttonText}</button>
+      <p>Wallet Address: {walletAddress}</p>
+        <p>
           Select your veBAL gauges to create vote script
         </p>
-        <p className="New">0x2e4e99a1000000000000000000000000{gauge1}000000000000000000000000{gauge2}00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002710000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-        </p>
-      <button
-      onClick={requestAccount}>Connect Wallet</button>
-      <h3>Wallet Address: {walletAddress}</h3>
-      <button
-      onClick={connectWallet}>Contract Data</button>
+      {/* <button onClick={connectWallet}>Contract Data</button>
       {contractInfo.tokenName}
       <br />
       {contractInfo.tokenSymbol}
       <br />
       {contractInfo.totalSupply}
       <br />
-      <button
-      onClick={getMyBalance}>Get Balance</button>
+      <button onClick={getMyBalance}>Get Balance</button>
       {balanceInfo.address}
       <br />
-      {balanceInfo.balance}
+      {balanceInfo.balance} */}
       <br />
-      <button
-      onClick={updateVotes}>VOTE</button>
       {data}
-      
+      <br />
+      <button onClick={updateVotes}>Click to vote for veBAL gauges</button>
+      <br />
+      <p className="New">HEX Data: 0x2e4e99a1000000000000000000000000{gauge1}000000000000000000000000{gauge2}00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002710000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+        </p>
       </header>
     </div>
   );
