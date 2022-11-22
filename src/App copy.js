@@ -7,14 +7,17 @@ import {Vote_ABI, Vote_address} from './abi'
 function App() {
   
   const [walletAddress, setWalletAddress] = useState()
+  const [contractInfo, setContractInfo] = useState({tokenName: "-",tokenSymbol: "-",totalSupply: "-"})
+  const [balanceInfo, setBalanceInfo] = useState({address: "-", balance: "-"})
   const [buttonText, setButtonText] = useState ('Connect Wallet')
-  const [gauge1, setGauge1] = useState()
-  const [gauge2, setGauge2] = useState()
 
-  const [data, setData] =useState()
-  const apiURL = 'https://raw.githubusercontent.com/balancer-labs/frontend-v2/master/public/data/voting-gauges.json'
+  let [data, setData] =useState()
+  let apiURL = 'https://raw.githubusercontent.com/balancer-labs/frontend-v2/master/public/data/voting-gauges.json'
   let displayData
-    
+  
+  let [gauge1, setGauge1] = useState()
+  let [gauge2, setGauge2] = useState()
+  
   let handleGaugeChange1 = (e) => {
     setGauge1(e.target.value)
   }
@@ -76,6 +79,39 @@ function App() {
     }
   }
 
+
+  async function connectWallet() {
+    if(typeof window.ethereum !== 'undefined') {
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const erc20 = new ethers.Contract(Vote_address, Vote_ABI, provider)
+
+      const tokenName = await erc20.token()
+      const tokenSymbol = await erc20.voting_escrow()
+      const totalSupply = await erc20.admin()
+      
+      setContractInfo({
+        tokenName,
+        tokenSymbol,
+        totalSupply
+      })      
+    }
+  }
+
+  async function getMyBalance() {
+    await requestAccount()
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    await provider.send("eth_requestAccounts", [])
+    const erc20 = new ethers.Contract(Vote_address, Vote_ABI, provider)
+    const signer = await provider.getSigner()
+    const signerAddress = await signer.getAddress()
+    const balance = await erc20.vote_user_power(signerAddress)
+
+    setBalanceInfo({
+      address: signerAddress,
+      balance: String(balance)
+    })
+  }
+
   async function updateVotes() {
     await requestAccount()
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -98,6 +134,18 @@ function App() {
       <p className="vebaltitle">
         Select your veBAL gauges
       </p>
+      
+      {/* <button onClick={connectWallet}>Contract Data</button>
+      {contractInfo.tokenName}
+      <br />
+      {contractInfo.tokenSymbol}
+      <br />
+      {contractInfo.totalSupply}
+      <br />
+      <button onClick={getMyBalance}>Get Balance</button>
+      {balanceInfo.address}
+      <br />
+      {balanceInfo.balance} */}
       <br />
       {data}
       <br />
