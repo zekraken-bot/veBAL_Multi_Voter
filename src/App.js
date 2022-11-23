@@ -7,7 +7,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { styled } from "@mui/material/styles";
-
+import Grid from '@mui/material/Grid';
 
 
 export default function App() {
@@ -57,16 +57,17 @@ export default function App() {
     }
   })
 
-  const helper =['hi']
   async function pullJSON() {
   const response = await fetch(apiURL)
   const responseData = await response.json()
     //console.log(responseData)
     
-    displayData = helper.map((item) => {
+    displayData = (() => {
       return(
-          <div className="autoComplete" key={"maindiv"}>       
-                  
+          <div key={"maindiv"}>       
+          <Grid sx={{ flexGrow: 1 }} container spacing={2}>       
+          <Grid item xs={6}>
+
           <StyledAutocomplete
             onChange={(event, newValue) => {
               setGauge1(newValue.address.slice(2,42))
@@ -75,8 +76,10 @@ export default function App() {
             options={responseData}
             getOptionLabel={(option) => JSON.stringify([option.pool.symbol,option.address,option.relativeWeightCap])}
             sx={{ width: 800 }}
-            renderInput={(params) => <TextField {...params} label="Address" />}
+            renderInput={(params) => <TextField {...params} label="Gauge Address => 0%" />}
           />
+          </Grid>
+          <Grid item xs={6}>
           <StyledAutocomplete
             onChange={(event, newValue2) => {
               setGauge2(newValue2.address.slice(2,42))
@@ -85,8 +88,10 @@ export default function App() {
             options={responseData}
             getOptionLabel={(option) => JSON.stringify([option.pool.symbol,option.address,option.relativeWeightCap])}
             sx={{ width: 800 }}
-            renderInput={(params) => <TextField {...params} label="Address" variant="outlined"/>}
+            renderInput={(params) => <TextField {...params} label="Grid Address => 100%"/>}
           />
+          </Grid>
+          </Grid>
           </div>
       )
     })
@@ -152,14 +157,14 @@ export default function App() {
       
       <div className="mainContent">
       <p className="vebaltitle">
-        veBAL Gauge Voter
+        <u>veBAL Gauge Voter</u>
       </p>
       <p>
-        Notes:
+        Usage Notes:
         <li>Double check your wallet address before voting</li>
         <li>If there are two gauges in the list select the gauge with a cap</li>
         <li>Current functionality only works for voting 0% for 1st gauge and 100% for the 2nd gauge</li>
-        <li>Hex data has been included if you want to inspect or send directly to the gaugeController contract</li>
+        <li>Hex data has been included if you want to validate and/or send directly to the gaugeController contract</li>
         <li>Info in dropdown 1) gauge symbol, 2) gauge address, 3) gauge cap</li>
       </p>
       <br />
