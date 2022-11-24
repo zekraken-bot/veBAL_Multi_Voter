@@ -64,7 +64,7 @@ export default function App() {
     
     displayData = (() => {
       return(
-          <div key={"maindiv"}>       
+          <div>       
           <Grid sx={{ flexGrow: 1 }} container spacing={2}>       
           <Grid item xs={6}>
 
