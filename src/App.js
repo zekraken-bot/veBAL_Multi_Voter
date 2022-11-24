@@ -102,6 +102,7 @@ export default function App() {
   useEffect(() => {
     pullJSON()
     checkWalletonLoad()
+    // eslint-disable-next-line
   },[])
 
   async function checkWalletonLoad() {
