@@ -4,18 +4,26 @@ html, body {
 }
 
 .mainContent {
+  height: 100%;
+  padding: 0;
+  margin: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: #3d3939;
   color: rgb(219, 219, 219);
 }
 
+.row {
+  width: 70%;
+}
+
+.flex-item {  
+  text-align: center;  
+}
+
 .hexData {
-  inline-size: 650px;
   overflow-wrap: break-word;
-  text-align: center;
   color: rgb(219, 219, 219);
 }
 
