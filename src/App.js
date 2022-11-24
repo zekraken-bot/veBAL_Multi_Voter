@@ -39,24 +39,26 @@ export default function App() {
   
   const StyledAutocomplete = styled(Autocomplete)({
     "& .MuiInputLabel-outlined": {
-      color: "#dbdbdb"
+      color: "#dbdbdb",
+      fontSize: '11px'
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
         borderColor: "white"
       },
       '&:hover fieldset': {
-        borderColor: "#0f6ea6",
+        borderColor: "#0f6ea6"
       },
       '&.Mui-focused fieldset': {
-        borderColor: "#0f97a6",
+        borderColor: "#0f97a6"
       }
     },
     '& .MuiOutlinedInput-input' : {
       color: "#dbdbdb",
+      fontSize: '11px'
     }
   })
-
+  
   async function pullJSON() {
   const response = await fetch(apiURL)
   const responseData = await response.json()
@@ -72,6 +74,7 @@ export default function App() {
               setGauge1(newValue.address.slice(2,42))
             }}
             id="first_address_box"
+            ListboxProps={{sx: { fontSize: 12 }}}
             options={responseData}
             getOptionLabel={(option) => JSON.stringify([option.pool.symbol,option.address,option.relativeWeightCap])}
             sx={{ maxWidth: 800 }}
@@ -84,6 +87,7 @@ export default function App() {
               setGauge2(newValue2.address.slice(2,42))
             }}
             id="second_address_box"
+            ListboxProps={{sx: { fontSize: 12 }}}
             options={responseData}
             getOptionLabel={(option) => JSON.stringify([option.pool.symbol,option.address,option.relativeWeightCap])}
             sx={{ maxWidth: 800 }}
@@ -161,9 +165,10 @@ export default function App() {
             Usage Notes:
             <li>Double check your wallet address before voting</li>
             <li>If there are two gauges in the list select the gauge with a cap</li>
+            <li>Type-ahead is available for quick searching</li>
             <li>Current functionality only works for voting 0% for 1st gauge and 100% for the 2nd gauge</li>
             <li>Hex data has been included if you want to validate and/or send directly to the gaugeController contract</li>
-            <li>Info in dropdown 1) gauge symbol, 2) gauge address, 3) gauge cap</li>
+            <li>Order of info in dropdown 1) gauge symbol, 2) gauge address, 3) gauge cap</li>
           </p>
           <br />
           <div className='flex-item'>
