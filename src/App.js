@@ -1,7 +1,7 @@
 import './App.css';
 import { useEffect, useState } from "react";
 import { ethers } from 'ethers';
-import {Vote_ABI, Vote_address} from './abi';
+import { Vote_ABI, Vote_address } from './abi';
 import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
