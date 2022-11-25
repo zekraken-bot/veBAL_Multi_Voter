@@ -8,6 +8,8 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { styled } from "@mui/material/styles";
 import Grid from '@mui/material/Grid';
+//import useFetch from './components/useFetch';
+import getServerData from './components/fetchData';
 
 
 export default function App() {
@@ -16,9 +18,10 @@ export default function App() {
   const [buttonText, setButtonText] = useState ('Connect Wallet')
   const [gauge1, setGauge1] = useState()
   const [gauge2, setGauge2] = useState()
-
   const [data, setData] = useState()
+
   const apiURL = 'https://raw.githubusercontent.com/balancer-labs/frontend-v2/master/public/data/voting-gauges.json'
+  
   let displayData
   
   const theme = createTheme({
@@ -40,7 +43,8 @@ export default function App() {
   const StyledAutocomplete = styled(Autocomplete)({
     "& .MuiInputLabel-outlined": {
       color: "#dbdbdb",
-      fontSize: '11px'
+      fontSize: '15px'
+      
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
@@ -59,11 +63,24 @@ export default function App() {
     }
   })
   
+  
+  //const jsonData = useFetch()
+  //console.log(jsonData)
+  let responseData
+
+  async function test () {
+    const displayData2 = await getServerData()
+    responseData = displayData2
+    console.log(displayData2)
+    }
+    test()
+
   async function pullJSON() {
-  const response = await fetch(apiURL)
-  const responseData = await response.json()
-    //console.log(responseData)
     
+    const response = await fetch(apiURL)
+    //const responseData = await response.json()
+    //console.log(responseData)
+  
     displayData = (() => {
       return(
           <div>       
@@ -101,6 +118,8 @@ export default function App() {
     setData(displayData)
   }
   
+  
+
   useEffect(() => {
     pullJSON()
     checkWalletonLoad()
@@ -166,14 +185,14 @@ export default function App() {
             <li>Double check your wallet address before voting</li>
             <li>If there are two gauges in the list select the gauge with a cap</li>
             <li>Type-ahead is available for quick searching</li>
-            <li>Current functionality only works for voting 0% for 1st gauge and 100% for the 2nd gauge</li>
+            <li>Current functionality only supports voting 0% for 1st gauge (gauge you are currently voting for) and 100% for the 2nd gauge</li>
             <li>Hex data has been included if you want to validate and/or send directly to the gaugeController contract</li>
             <li>Order of info in dropdown 1) gauge symbol, 2) gauge address, 3) gauge cap</li>
           </p>
           <br />
           <div className='flex-item'>
           {data}          
-          <br />          
+          <br />      
           <Button variant="contained" color="red" className ="button" onClick={updateVotes}>Click to vote for veBAL gauges</Button>          
           <br />
           <p className="hexData">HEX Data:<br /><br />0x2e4e99a1000000000000000000000000{gauge1}000000000000000000000000{gauge2}00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002710000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
