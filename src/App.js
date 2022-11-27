@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { styled } from "@mui/material/styles";
 import Grid from '@mui/material/Grid';
+import getServerData from './components/fetchData';
 
 
 export default function App() {
@@ -16,11 +17,8 @@ export default function App() {
   const [buttonText, setButtonText] = useState ('Connect Wallet')
   const [gauge1, setGauge1] = useState()
   const [gauge2, setGauge2] = useState()
-
   const [data, setData] = useState()
-  const apiURL = 'https://raw.githubusercontent.com/balancer-labs/frontend-v2/master/public/data/voting-gauges.json'
-  let displayData
-  
+      
   const theme = createTheme({
     status: {
       danger: '#e53e3e',
@@ -40,7 +38,8 @@ export default function App() {
   const StyledAutocomplete = styled(Autocomplete)({
     "& .MuiInputLabel-outlined": {
       color: "#dbdbdb",
-      fontSize: '11px'
+      fontSize: '15px'
+      
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
@@ -59,52 +58,52 @@ export default function App() {
     }
   })
   
-  async function pullJSON() {
-  const response = await fetch(apiURL)
-  const responseData = await response.json()
-    //console.log(responseData)
-    
-    displayData = (() => {
-      return(
-          <div>       
-          <Grid container spacing={2}>       
-          <Grid item xs={6}>
-          <StyledAutocomplete
-            onChange={(event, newValue) => {
-              setGauge1(newValue.address.slice(2,42))
-            }}
-            id="first_address_box"
-            ListboxProps={{sx: { fontSize: 12 }}}
-            options={responseData}
-            getOptionLabel={(option) => JSON.stringify([option.pool.symbol,option.address,option.relativeWeightCap])}
-            sx={{ maxWidth: 800 }}
-            renderInput={(params) => <TextField {...params} label="Gauge Address => 0%" />}
-          />
-          </Grid>
-          <Grid item xs={6}>
-          <StyledAutocomplete
-            onChange={(event, newValue2) => {
-              setGauge2(newValue2.address.slice(2,42))
-            }}
-            id="second_address_box"
-            ListboxProps={{sx: { fontSize: 12 }}}
-            options={responseData}
-            getOptionLabel={(option) => JSON.stringify([option.pool.symbol,option.address,option.relativeWeightCap])}
-            sx={{ maxWidth: 800 }}
-            renderInput={(params) => <TextField {...params} label="Grid Address => 100%"/>}
-          />
-          </Grid>
-          </Grid>
-          </div>
-      )
-    })
-    setData(displayData)
-  }
-  
   useEffect(() => {
+    
+    async function pullJSON() {
+      const responseData = await getServerData()
+      //const responseData = getData
+    
+      let displayData = (() => {
+        return(
+            <div>       
+            <Grid container spacing={2}>       
+              <Grid item xs={6}>
+                <StyledAutocomplete
+                  onChange={(event, newValue) => {
+                    setGauge1(newValue.address.slice(2,42))
+                  }}
+                  id="first_address_box"
+                  ListboxProps={{sx: { fontSize: 12 }}}
+                  options={responseData}
+                  getOptionLabel={(option) => JSON.stringify([option.pool.symbol,option.address,option.relativeWeightCap])}
+                  sx={{ maxWidth: 800 }}
+                  renderInput={(params) => <TextField {...params} label="Gauge Address => 0%" />}
+                />
+                </Grid>
+              <Grid item xs={6}>
+                <StyledAutocomplete
+                  onChange={(event, newValue2) => {
+                    setGauge2(newValue2.address.slice(2,42))
+                  }}
+                  id="second_address_box"
+                  ListboxProps={{sx: { fontSize: 12 }}}
+                  options={responseData}
+                  getOptionLabel={(option) => JSON.stringify([option.pool.symbol,option.address,option.relativeWeightCap])}
+                  sx={{ maxWidth: 800 }}
+                  renderInput={(params) => <TextField {...params} label="Grid Address => 100%"/>}
+                />
+              </Grid>
+            </Grid>
+            </div>
+        )
+      })
+      setData(displayData)
+    }
+        
     pullJSON()
     checkWalletonLoad()
-    // eslint-disable-next-line
+    
   },[])
 
   async function checkWalletonLoad() {
@@ -166,14 +165,14 @@ export default function App() {
             <li>Double check your wallet address before voting</li>
             <li>If there are two gauges in the list select the gauge with a cap</li>
             <li>Type-ahead is available for quick searching</li>
-            <li>Current functionality only works for voting 0% for 1st gauge and 100% for the 2nd gauge</li>
-            <li>Hex data has been included if you want to validate and/or send directly to the gaugeController contract</li>
+            <li>Current functionality only supports voting 0% for 1st gauge (gauge you are currently voting for) and 100% for the 2nd gauge</li>
+            <li>Hex data has been included if you want to validate and/or send directly to the gaugeController contract through your wallet</li>
             <li>Order of info in dropdown 1) gauge symbol, 2) gauge address, 3) gauge cap</li>
           </p>
           <br />
           <div className='flex-item'>
           {data}          
-          <br />          
+          <br />      
           <Button variant="contained" color="red" className ="button" onClick={updateVotes}>Click to vote for veBAL gauges</Button>          
           <br />
           <p className="hexData">HEX Data:<br /><br />0x2e4e99a1000000000000000000000000{gauge1}000000000000000000000000{gauge2}00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002710000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
