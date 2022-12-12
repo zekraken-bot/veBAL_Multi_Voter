@@ -54,3 +54,33 @@ html, body {
 .dropdown {
   font-size: 18px;
 }
+
+.validationTable {
+  margin-left: 150px;
+  margin-right: auto;
+}
+
+.totalTable {
+  text-align: right;
+}
+
+.addressTable {
+  text-align: left;
+}
+
+.voteTable {
+  text-align: left;
+  padding-left: 10%;
+}
+
+.voteSymbol {
+  text-align: left;
+  padding-right: 5px;
+}
+
+.errorTable {
+  text-align: left;
+  padding-left: 5%;
+  color: red;
+  font-weight: 700;
+}
