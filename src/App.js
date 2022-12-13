@@ -104,11 +104,15 @@ export default function App() {
       let displayData = (() => {
         return(
             <div>       
-            <Grid container spacing={2}>       
-              <Grid item xs={6}>
+            <Grid
+              container 
+              spacing={1}
+              justifyContent="center"
+            >       
+              <Grid item xs={7}>
                 <StyledAutocomplete
                   onChange={(event, newValue) => {
-                    setGauge1(newValue)
+                    setGauge1(newValue === null ? {address: '0x0000000000000000000000000000000000000000', pool: {symbol: ''}} : newValue)
                   }}
                   id="address_box"
                   ListboxProps={{sx: { fontSize: 12 }}}
@@ -118,19 +122,19 @@ export default function App() {
                   renderInput={(params) => <TextField {...params} label="Select Gauge #1" />}
                 />
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={1}>
                 <StyledTextField
                   id="vote_textbox"
-                  label="Vote Weight"
+                  label="Weight"
                   onChange={(newValueText) => {
-                    setgaugeText1(newValueText.target.value)
+                    setgaugeText1(isNaN(parseInt(newValueText.target.value)) ? 0 : newValueText.target.value)
                   }}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={7}>
                 <StyledAutocomplete
                   onChange={(event, newValue2) => {
-                    setGauge2(newValue2)
+                    setGauge2(newValue2 === null ? {address: '0x0000000000000000000000000000000000000000', pool: {symbol: ''}} : newValue2)
                   }}
                   id="address_box"
                   ListboxProps={{sx: { fontSize: 12 }}}
@@ -140,19 +144,19 @@ export default function App() {
                   renderInput={(params) => <TextField {...params} label="Select Gauge #2"/>}
                 />
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={1}>
                 <StyledTextField
                   id="vote_textbox"
-                  label="Vote Weight"
+                  label="Weight"
                   onChange={(newValueText2) => {
-                    setgaugeText2(newValueText2.target.value)
+                    setgaugeText2(isNaN(parseInt(newValueText2.target.value)) ? 0 : newValueText2.target.value)
                   }}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={7}>
                 <StyledAutocomplete
                   onChange={(event, newValue3) => {
-                    setGauge3(newValue3)
+                    setGauge3(newValue3 === null ? {address: '0x0000000000000000000000000000000000000000', pool: {symbol: ''}} : newValue3)
                   }}
                   id="address_box"
                   ListboxProps={{sx: { fontSize: 12 }}}
@@ -162,19 +166,19 @@ export default function App() {
                   renderInput={(params) => <TextField {...params} label="Select Gauge #3"/>}
                 />
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={1}>
                 <StyledTextField
                   id="vote_textbox"
-                  label="Vote Weight"
+                  label="Weight"
                   onChange={(newValueText3) => {
-                    setgaugeText3(newValueText3.target.value)
+                    setgaugeText3(isNaN(parseInt(newValueText3.target.value)) ? 0 : newValueText3.target.value)
                   }}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={7}>
                 <StyledAutocomplete
                   onChange={(event, newValue4) => {
-                    setGauge4(newValue4)
+                    setGauge4(newValue4 === null ? {address: '0x0000000000000000000000000000000000000000', pool: {symbol: ''}} : newValue4)
                   }}
                   id="address_box"
                   ListboxProps={{sx: { fontSize: 12 }}}
@@ -184,19 +188,19 @@ export default function App() {
                   renderInput={(params) => <TextField {...params} label="Select Gauge #4"/>}
                 />
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={1}>
                 <StyledTextField
                   id="vote_textbox"
-                  label="Vote Weight"
+                  label="Weight"
                   onChange={(newValueText4) => {
-                    setgaugeText4(newValueText4.target.value)
+                    setgaugeText4(isNaN(parseInt(newValueText4.target.value)) ? 0 : newValueText4.target.value)
                   }}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={7}>
                 <StyledAutocomplete
                   onChange={(event, newValue5) => {
-                    setGauge5(newValue5)
+                    setGauge5(newValue5 === null ? {address: '0x0000000000000000000000000000000000000000', pool: {symbol: ''}} : newValue5)
                   }}
                   id="address_box"
                   ListboxProps={{sx: { fontSize: 12 }}}
@@ -206,19 +210,19 @@ export default function App() {
                   renderInput={(params) => <TextField {...params} label="Select Gauge #5"/>}
                 />
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={1}>
                 <StyledTextField
                   id="vote_textbox"
-                  label="Vote Weight"
+                  label="Weight"
                   onChange={(newValueText5) => {
-                    setgaugeText5(newValueText5.target.value)
+                    setgaugeText5(isNaN(parseInt(newValueText5.target.value)) ? 0 : newValueText5.target.value)
                   }}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={7}>
                 <StyledAutocomplete
                   onChange={(event, newValue6) => {
-                    setGauge6(newValue6)
+                    setGauge6(newValue6 === null ? {address: '0x0000000000000000000000000000000000000000', pool: {symbol: ''}} : newValue6)
                   }}
                   id="address_box"
                   ListboxProps={{sx: { fontSize: 12 }}}
@@ -228,19 +232,19 @@ export default function App() {
                   renderInput={(params) => <TextField {...params} label="Select Gauge #6"/>}
                 />
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={1}>
                 <StyledTextField
                   id="vote_textbox"
-                  label="Vote Weight"
+                  label="Weight"
                   onChange={(newValueText6) => {
-                    setgaugeText6(newValueText6.target.value)
+                    setgaugeText6(isNaN(parseInt(newValueText6.target.value)) ? 0 : newValueText6.target.value)
                   }}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={7}>
                 <StyledAutocomplete
                   onChange={(event, newValue7) => {
-                    setGauge7(newValue7)
+                    setGauge7(newValue7 === null ? {address: '0x0000000000000000000000000000000000000000', pool: {symbol: ''}} : newValue7)
                   }}
                   id="address_box"
                   ListboxProps={{sx: { fontSize: 12 }}}
@@ -250,19 +254,19 @@ export default function App() {
                   renderInput={(params) => <TextField {...params} label="Select Gauge #7"/>}
                 />
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={1}>
                 <StyledTextField
                   id="vote_textbox"
-                  label="Vote Weight"
+                  label="Weight"
                   onChange={(newValueText7) => {
-                    setgaugeText7(newValueText7.target.value)
+                    setgaugeText7(isNaN(parseInt(newValueText7.target.value)) ? 0 : newValueText7.target.value)
                   }}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={7}>
                 <StyledAutocomplete
                   onChange={(event, newValue8) => {
-                    setGauge8(newValue8)
+                    setGauge8(newValue8 === null ? {address: '0x0000000000000000000000000000000000000000', pool: {symbol: ''}} : newValue8)
                   }}
                   id="address_box"
                   ListboxProps={{sx: { fontSize: 12 }}}
@@ -272,12 +276,12 @@ export default function App() {
                   renderInput={(params) => <TextField {...params} label="Select Gauge #8"/>}
                 />
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={1}>
                 <StyledTextField
                   id="vote_textbox"
-                  label="Vote Weight"
+                  label="Weight"
                   onChange={(newValueText8) => {
-                    setgaugeText8(newValueText8.target.value)
+                    setgaugeText8(isNaN(parseInt(newValueText8.target.value)) ? 0 : newValueText8.target.value)
                   }}
                 />
               </Grid>
@@ -349,23 +353,24 @@ export default function App() {
             <u>veBAL Gauge Voter</u>
             </p>
           </div>
-          <p>
+          <div>
             Usage Notes:
             <ul>
             <li>Make sure your wallet is connected</li>
             <li>If there are two gauges in the list select the gauge with a cap (last value not "null")</li>
             <li>Type-ahead is available for quick searching</li>
             <li>8 gauge changes supported, make sure you reduce votes given to a gauge (or you have spare voting power) in order to vote elsewhere</li>
+            <li>Make sure your gauge you are changing isn't timelocked; every vote is locked for 10 days</li>
             <li>Use table at the bottom to confirm/validate your input</li>
             <li>To vote, click the BIG RED button and review/confirm tx in your wallet; double check your wallet address before voting</li>
             </ul>
-            EXAMPLES
+            Examples:
             <ol>
             <li>Decrease "gauge #1" to 0, increase "gauge 2" to 100; this moves 100% of your vote from one gauge to another</li>
-            <li>Decrease "gauge #1" to 0, increase "gauge 2" to 50, increase "gauge #3" to 50; this moves 100% of your vote from one gauge to two others, 50/50 split</li>
-            <li>Decrease "gauge #1" to 50, increase "gauge 2" to 25, increase "gauge #3" to 25; this moves 50% of your vote from one gauge to two others, 50/50 split</li>
+            <li>Decrease "gauge #1" to 0, increase "gauge 2" to 50, increase "gauge #3" to 50; this moves 100% of your vote from one gauge to two others</li>
+            <li>Decrease "gauge #1" to 50, increase "gauge 2" to 25, increase "gauge #3" to 25; this moves 50% of your vote from one gauge to two others</li>
             </ol>
-          </p>
+          </div>
           <br />
           <div className='flex-item'>
           {data}          
@@ -374,55 +379,55 @@ export default function App() {
           <table className="validationTable">
             <tbody>
               <tr>
-                <th>Gauge Number</th>
-                <th>Gauge Symbol</th>
-                <th>Gauge Address</th>
-                <th>Gauge Vote Weight</th>
+                <th className="gaugeNumber">Gauge Number</th>
+                <th className="gaugeNumber">Gauge Symbol</th>
+                <th className="gaugeNumber">Gauge Address</th>
+                <th className="gaugeNumber">Gauge Vote Weight</th>
               </tr>
               <tr>
-                <td>#1</td>
+                <td className="gaugeNumber">#1</td>
                 <td className="voteSymbol">{gauge1.pool.symbol}</td>
                 <td className="addressTable">{gauge1.address}</td>
                 <td className="voteTable">{gaugeText1}</td>
               </tr>
               <tr>
-                <td>#2</td>
+                <td className="gaugeNumber">#2</td>
                 <td className="voteSymbol">{gauge2.pool.symbol}</td>
                 <td className="addressTable">{gauge2.address}</td>
                 <td className="voteTable">{gaugeText2}</td>
               </tr>
               <tr>
-                <td>#3</td>
+                <td className="gaugeNumber">#3</td>
                 <td className="voteSymbol">{gauge3.pool.symbol}</td>
                 <td className="addressTable">{gauge3.address}</td>
                 <td className="voteTable">{gaugeText3}</td>
               </tr>
               <tr>
-                <td>#4</td>
+                <td className="gaugeNumber">#4</td>
                 <td className="voteSymbol">{gauge4.pool.symbol}</td>
                 <td className="addressTable">{gauge4.address}</td>
                 <td className="voteTable">{gaugeText4}</td>
               </tr>
               <tr>
-                <td>#5</td>
+                <td className="gaugeNumber">#5</td>
                 <td className="voteSymbol">{gauge5.pool.symbol}</td>
                 <td className="addressTable">{gauge5.address}</td>
                 <td className="voteTable">{gaugeText5}</td>
               </tr>
               <tr>
-                <td>#6</td>
+                <td className="gaugeNumber">#6</td>
                 <td className="voteSymbol">{gauge6.pool.symbol}</td>
                 <td className="addressTable">{gauge6.address}</td>
                 <td className="voteTable">{gaugeText6}</td>
               </tr>
               <tr>
-                <td>#7</td>
+                <td className="gaugeNumber">#7</td>
                 <td className="voteSymbol">{gauge7.pool.symbol}</td>
                 <td className="addressTable">{gauge7.address}</td>
                 <td className="voteTable">{gaugeText7}</td>
               </tr>
               <tr>
-                <td>#8</td>
+                <td className="gaugeNumber">#8</td>
                 <td className="voteSymbol">{gauge8.pool.symbol}</td>
                 <td className="addressTable">{gauge8.address}</td>
                 <td className="voteTable">{gaugeText8}</td>

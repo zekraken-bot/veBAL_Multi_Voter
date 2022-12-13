@@ -12,6 +12,7 @@ html, body {
   justify-content: center;
   background-color: #3d3939;
   color: rgb(219, 219, 219);
+  font-size: 14px;
 }
 
 .row {
@@ -60,22 +61,30 @@ html, body {
   margin-right: auto;
 }
 
-.totalTable {
-  text-align: right;
-}
-
 .addressTable {
   text-align: left;
+  font-size: 14px;
 }
 
 .voteTable {
   text-align: left;
   padding-left: 10%;
+  font-size: 14px;
 }
 
 .voteSymbol {
   text-align: left;
   padding-right: 5px;
+  font-size: 14px;
+}
+
+.gaugeNumber {
+  font-size: 14px;
+}
+
+.totalTable {
+  text-align: right;
+  font-size: 14px;
 }
 
 .errorTable {
@@ -83,4 +92,5 @@ html, body {
   padding-left: 5%;
   color: red;
   font-weight: 700;
+  font-size: 14px;
 }
