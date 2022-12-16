@@ -458,7 +458,7 @@ export default function App() {
           </div>
         </div>
       </div>
-      <footer className="footer">open source project created by&nbsp;<a href="https://twitter.com/The_Krake">@ZeKraken</a>&nbsp;:&nbsp;<a href="https://github.com/zekraken-bot/veBAL_Multi_Voter">github link</a></footer>
+      <footer className="footer">open source project created by&nbsp;<a href="https://twitter.com/The_Krake" target="_blank" rel="noopener noreferrer">@ZeKraken</a>&nbsp;:&nbsp;<a href="https://github.com/zekraken-bot/veBAL_Multi_Voter" target="_blank" rel="noopener noreferrer">github link</a></footer>
       <br />
     </>
     </ThemeProvider>
