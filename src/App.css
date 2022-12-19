@@ -104,3 +104,8 @@ a:link, a:visited {
   font-weight: 700;
   font-size: 14px;
 }
+
+.big {
+  font-size: 14px;
+  font-weight: 500;
+}

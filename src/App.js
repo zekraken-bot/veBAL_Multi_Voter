@@ -347,8 +347,8 @@ export default function App() {
       </header>  
       
       <div className="mainContent">
-        <div className='row'>
-          <div className='flex-item'>
+        <div className="row">
+          <div className="flex-item">
             <p className="vebaltitle">
             <u>veBAL Gauge Voter</u>
             </p>
@@ -357,12 +357,12 @@ export default function App() {
             Usage Notes:
             <ul>
             <li>Make sure your wallet is connected</li>
-            <li>If there are two gauges in the list select the gauge with a cap (last value not "null")</li>
+            <li>Killed gauges are not in the dropdown selector</li>
             <li>Type-ahead is available for quick searching</li>
-            <li>8 gauge changes supported, make sure you reduce votes given to a gauge (or you have spare voting power) in order to vote elsewhere</li>
-            <li>Make sure your gauge you are changing isn't timelocked; every vote is locked for 10 days</li>
-            <li>Use table at the bottom to confirm/validate your input</li>
-            <li>To vote, click the BIG RED button and review/confirm tx in your wallet; double check your wallet address before voting</li>
+            <li>8 gauge changes supported at one time, make sure you reduce votes to a gauge in order to vote elsewhere (unless you have free voting power) </li>
+            <li>Make sure the gauge you are changing isn't time-locked; every vote is locked for 10 days from tx confirmation</li>
+            <li>Use table at the bottom to confirm/validate your inputs</li>
+            <li>To vote, click the <span className="big">RED</span> button and review/confirm tx in your wallet; double check your wallet address before voting</li>
             </ul>
             Examples:
             <ol>
