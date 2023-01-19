@@ -6,6 +6,11 @@ export default async function getServerData() {
     
     const networkName = jsonData.map(e => {
         
+        const symbols = e.pool.tokens.map (f => {
+            return f.symbol
+        })
+        e.pool.tokens = symbols
+
         if (e.network === 1){
             e.network = "Mainnet"
         }

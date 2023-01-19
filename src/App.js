@@ -116,7 +116,7 @@ export default function App() {
                   id="address_box"
                   ListboxProps={{sx: { fontSize: 12 }}}
                   options={responseData}
-                  getOptionLabel={(option) => JSON.stringify([option.pool.symbol,option.address,option.network])}
+                  getOptionLabel={(option) => JSON.stringify([option.pool.symbol,"|",option.address,"|",option.network,"| Symbols: ",option.pool.tokens],null," ").replace(/]|[[]|"|,/g, '')}
                   sx={{ maxWidth: 800 }}
                   renderInput={(params) => <TextField {...params} label="Select Gauge #1" />}
                 />
@@ -138,7 +138,7 @@ export default function App() {
                   id="address_box"
                   ListboxProps={{sx: { fontSize: 12 }}}
                   options={responseData}
-                  getOptionLabel={(option) => JSON.stringify([option.pool.symbol,option.address,option.network])}
+                  getOptionLabel={(option) => JSON.stringify([option.pool.symbol,"|",option.address,"|",option.network,"| Symbols: ",option.pool.tokens],null," ").replace(/]|[[]|"|,/g, '')}
                   sx={{ maxWidth: 800 }}
                   renderInput={(params) => <TextField {...params} label="Select Gauge #2"/>}
                 />
@@ -160,7 +160,7 @@ export default function App() {
                   id="address_box"
                   ListboxProps={{sx: { fontSize: 12 }}}
                   options={responseData}
-                  getOptionLabel={(option) => JSON.stringify([option.pool.symbol,option.address,option.network])}
+                  getOptionLabel={(option) => JSON.stringify([option.pool.symbol,"|",option.address,"|",option.network,"| Symbols: ",option.pool.tokens],null," ").replace(/]|[[]|"|,/g, '')}
                   sx={{ maxWidth: 800 }}
                   renderInput={(params) => <TextField {...params} label="Select Gauge #3"/>}
                 />
@@ -182,7 +182,7 @@ export default function App() {
                   id="address_box"
                   ListboxProps={{sx: { fontSize: 12 }}}
                   options={responseData}
-                  getOptionLabel={(option) => JSON.stringify([option.pool.symbol,option.address,option.network])}
+                  getOptionLabel={(option) => JSON.stringify([option.pool.symbol,"|",option.address,"|",option.network,"| Symbols: ",option.pool.tokens],null," ").replace(/]|[[]|"|,/g, '')}
                   sx={{ maxWidth: 800 }}
                   renderInput={(params) => <TextField {...params} label="Select Gauge #4"/>}
                 />
@@ -204,7 +204,7 @@ export default function App() {
                   id="address_box"
                   ListboxProps={{sx: { fontSize: 12 }}}
                   options={responseData}
-                  getOptionLabel={(option) => JSON.stringify([option.pool.symbol,option.address,option.network])}
+                  getOptionLabel={(option) => JSON.stringify([option.pool.symbol,"|",option.address,"|",option.network,"| Symbols: ",option.pool.tokens],null," ").replace(/]|[[]|"|,/g, '')}
                   sx={{ maxWidth: 800 }}
                   renderInput={(params) => <TextField {...params} label="Select Gauge #5"/>}
                 />
@@ -226,7 +226,7 @@ export default function App() {
                   id="address_box"
                   ListboxProps={{sx: { fontSize: 12 }}}
                   options={responseData}
-                  getOptionLabel={(option) => JSON.stringify([option.pool.symbol,option.address,option.network])}
+                  getOptionLabel={(option) => JSON.stringify([option.pool.symbol,"|",option.address,"|",option.network,"| Symbols: ",option.pool.tokens],null," ").replace(/]|[[]|"|,/g, '')}
                   sx={{ maxWidth: 800 }}
                   renderInput={(params) => <TextField {...params} label="Select Gauge #6"/>}
                 />
@@ -248,7 +248,7 @@ export default function App() {
                   id="address_box"
                   ListboxProps={{sx: { fontSize: 12 }}}
                   options={responseData}
-                  getOptionLabel={(option) => JSON.stringify([option.pool.symbol,option.address,option.network])}
+                  getOptionLabel={(option) => JSON.stringify([option.pool.symbol,"|",option.address,"|",option.network,"| Symbols: ",option.pool.tokens],null," ").replace(/]|[[]|"|,/g, '')}
                   sx={{ maxWidth: 800 }}
                   renderInput={(params) => <TextField {...params} label="Select Gauge #7"/>}
                 />
@@ -270,7 +270,7 @@ export default function App() {
                   id="address_box"
                   ListboxProps={{sx: { fontSize: 12 }}}
                   options={responseData}
-                  getOptionLabel={(option) => JSON.stringify([option.pool.symbol,option.address,option.network])}
+                  getOptionLabel={(option) => JSON.stringify([option.pool.symbol,"|",option.address,"|",option.network,"| Symbols: ",option.pool.tokens],null," ").replace(/]|[[]|"|,/g, '')}
                   sx={{ maxWidth: 800 }}
                   renderInput={(params) => <TextField {...params} label="Select Gauge #8"/>}
                 />
