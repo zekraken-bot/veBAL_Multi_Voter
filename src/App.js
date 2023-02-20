@@ -358,13 +358,13 @@ export default function App() {
             <li>Make sure your wallet is connected</li>
             <li>Killed gauges are not in the dropdown selector</li>
             <li>Type-ahead is available for quick searching</li>
-            <li>8 gauge changes supported at one time, make sure you reduce votes to a gauge in order to vote elsewhere (unless you have free voting power) </li>
-            <li>Make sure the gauge you are changing isn't time-locked; every vote is locked for 10 days from tx confirmation</li>
-            <li>Use table at the bottom to confirm/validate your inputs</li>
+            <li>8 gauge changes supported at one time, make sure to reduce votes to a gauge in order to vote elsewhere (unless you have free voting power) </li>
+            <li>Make sure the gauge you are changing isn't time-locked; every gauge's vote is locked for 10 days from its tx confirmation</li>
             <li>To vote, click the <span className="big">RED</span> button and review/confirm tx in your wallet; double check your wallet address before voting</li>
             </ul>
             Examples:
             <ol>
+            <li>These examples assume "gauge #1" is currently at 100% and isn't vote locked</li>
             <li>Decrease "gauge #1" to 0, increase "gauge 2" to 100; this moves 100% of your vote from one gauge to another</li>
             <li>Decrease "gauge #1" to 0, increase "gauge 2" to 50, increase "gauge #3" to 50; this moves 100% of your vote from one gauge to two others</li>
             <li>Decrease "gauge #1" to 50, increase "gauge 2" to 25, increase "gauge #3" to 25; this moves 50% of your vote from one gauge to two others</li>
@@ -374,79 +374,19 @@ export default function App() {
           <div className='flex-item'>
           {data}          
           <br />
-          <br />
           <table className="validationTable">
             <tbody>
               <tr>
-                <th className="gaugeNumber">Gauge Number</th>
-                <th className="gaugeNumber">Gauge Symbol</th>
-                <th className="gaugeNumber">Gauge Address</th>
-                <th className="gaugeNumber">Gauge Vote Weight</th>
-              </tr>
-              <tr>
-                <td className="gaugeNumber">#1</td>
-                <td className="voteSymbol">{gauge1.pool.symbol}</td>
-                <td className="addressTable">{gauge1.address}</td>
-                <td className="voteTable">{gaugeText1}</td>
-              </tr>
-              <tr>
-                <td className="gaugeNumber">#2</td>
-                <td className="voteSymbol">{gauge2.pool.symbol}</td>
-                <td className="addressTable">{gauge2.address}</td>
-                <td className="voteTable">{gaugeText2}</td>
-              </tr>
-              <tr>
-                <td className="gaugeNumber">#3</td>
-                <td className="voteSymbol">{gauge3.pool.symbol}</td>
-                <td className="addressTable">{gauge3.address}</td>
-                <td className="voteTable">{gaugeText3}</td>
-              </tr>
-              <tr>
-                <td className="gaugeNumber">#4</td>
-                <td className="voteSymbol">{gauge4.pool.symbol}</td>
-                <td className="addressTable">{gauge4.address}</td>
-                <td className="voteTable">{gaugeText4}</td>
-              </tr>
-              <tr>
-                <td className="gaugeNumber">#5</td>
-                <td className="voteSymbol">{gauge5.pool.symbol}</td>
-                <td className="addressTable">{gauge5.address}</td>
-                <td className="voteTable">{gaugeText5}</td>
-              </tr>
-              <tr>
-                <td className="gaugeNumber">#6</td>
-                <td className="voteSymbol">{gauge6.pool.symbol}</td>
-                <td className="addressTable">{gauge6.address}</td>
-                <td className="voteTable">{gaugeText6}</td>
-              </tr>
-              <tr>
-                <td className="gaugeNumber">#7</td>
-                <td className="voteSymbol">{gauge7.pool.symbol}</td>
-                <td className="addressTable">{gauge7.address}</td>
-                <td className="voteTable">{gaugeText7}</td>
-              </tr>
-              <tr>
-                <td className="gaugeNumber">#8</td>
-                <td className="voteSymbol">{gauge8.pool.symbol}</td>
-                <td className="addressTable">{gauge8.address}</td>
-                <td className="voteTable">{gaugeText8}</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
                 <td className="totalTable">TOTAL:&nbsp;&nbsp;</td>
                 <td className="voteTable">{parseInt(gaugeText1)+parseInt(gaugeText2)+parseInt(gaugeText3)+parseInt(gaugeText4)+parseInt(gaugeText5)+parseInt(gaugeText6)+parseInt(gaugeText7)+parseInt(gaugeText8)}</td>
               </tr>
               <tr>
                 <td></td>
-                <td></td>
-                <td></td>
-                <td className="errorTable">{parseInt(gaugeText1)+parseInt(gaugeText2)+parseInt(gaugeText3)+parseInt(gaugeText4)+parseInt(gaugeText5)+parseInt(gaugeText6)+parseInt(gaugeText7)+parseInt(gaugeText8) > 100 ? "ERROR: >100" : ""}
-                </td>
+                <td className="errorTable">{parseInt(gaugeText1)+parseInt(gaugeText2)+parseInt(gaugeText3)+parseInt(gaugeText4)+parseInt(gaugeText5)+parseInt(gaugeText6)+parseInt(gaugeText7)+parseInt(gaugeText8) > 100 ? "ERROR: Votes >100" : ""}</td>
               </tr>
             </tbody>
           </table>    
-          <br/>
+          <br />
           <Button variant="contained" color="red" className ="button" onClick={updateVotes}>Click to vote for veBAL gauges</Button>          
           <br />
           <br />
