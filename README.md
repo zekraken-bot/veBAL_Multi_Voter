@@ -1,4 +1,4 @@
-This project was built to reduce the gas used when voting for multiple veBAL gauges at the same time. If you want to reduct the vote to one gauge today to move that voting power to another gauge you have to vote twice. Once to reduce the vote of gauge #1 adn then again to increase the vote to gauge #2.
+This project was built to reduce the gas used when voting for multiple veBAL gauges at the same time. If you want to reduce the vote to one gauge to move that voting power to another gauge today you have to vote twice, once to reduce the vote of gauge #1, and then again to increase the vote to gauge #2.
 
 ## Available Scripts
 
