@@ -26,6 +26,9 @@ export default async function getServerData() {
         else if (e.network === 5){
             e.network = "Goerli"
         }
+        else if (e.network === 100){
+            e.network = "Gnosis"
+        }
         return e
     })
 
