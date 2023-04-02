@@ -67,8 +67,7 @@ a:link, a:visited {
 }
 
 .validationTable {
-  margin-left: 150px;
-  margin-right: auto;
+  display: inline-block;
 }
 
 .addressTable {
@@ -78,8 +77,8 @@ a:link, a:visited {
 
 .voteTable {
   text-align: left;
-  padding-left: 10%;
   font-size: 14px;
+  padding-left: 35%;
 }
 
 .voteSymbol {
@@ -95,17 +94,20 @@ a:link, a:visited {
 .totalTable {
   text-align: right;
   font-size: 14px;
+  padding-left: 35%;
 }
 
 .errorTable {
   text-align: left;
-  padding-left: 5%;
   color: red;
   font-weight: 700;
   font-size: 14px;
+  width: 250px;
+  padding-left: 35%;
 }
 
 .big {
   font-size: 14px;
   font-weight: 500;
+  color: red;
 }
