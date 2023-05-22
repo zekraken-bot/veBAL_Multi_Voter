@@ -111,3 +111,25 @@ a:link, a:visited {
   font-weight: 500;
   color: red;
 }
+
+.MuiInputLabel-outlined {
+  color: #dbdbdb;
+  font-size: 15px;
+}
+
+.MuiOutlinedInput-root fieldset {
+  border-color: white;
+}
+
+.MuiOutlinedInput-root:hover fieldset {
+  border-color: #0f6ea6;
+}
+
+.MuiOutlinedInput-root.Mui-focused fieldset {
+  border-color: #0f97a6;
+}
+
+.MuiOutlinedInput-input {
+  color: #dbdbdb;
+  font-size: 12px;
+}
