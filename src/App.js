@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { ethers } from "ethers";
 import { Vote_ABI, Vote_address } from "./abi";
 import Button from "@mui/material/Button";
@@ -61,33 +61,33 @@ export default function App() {
     initialize();
   }, []);
 
-  async function setGaugesWithPower() {
+  const setGaugesWithPower = useCallback(async () => {
     if (data) {
+      const newGauges = new Array(8).fill();
+      const newGaugeTexts = new Array(8).fill(0);
+
+      let index = 0;
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = await provider.getSigner();
       const erc20 = new ethers.Contract(Vote_address, Vote_ABI, signer);
 
-      let newGauges = [...gauges];
-      let newGaugeTexts = [...gaugeTexts];
-      let gaugeIndex = 0;
-
-      for (let i = 0; i < data.length && gaugeIndex < newGauges.length; i++) {
+      for (let i = 0; i < data.length; i++) {
         const gaugePower = await erc20.vote_user_slopes(walletAddress, data[i].address);
-        if (gaugePower.power > 0) {
-          newGauges[gaugeIndex] = data[i];
-          newGaugeTexts[gaugeIndex] = (gaugePower.power / 100).toString();
-          gaugeIndex++;
+        if (gaugePower.power > 0 && index < 8) {
+          newGauges[index] = data[i];
+          newGaugeTexts[index] = (gaugePower.power / 100).toString();
+          index++;
         }
       }
       setGauges(newGauges);
       setGaugeTexts(newGaugeTexts);
       setLoading(false);
     }
-  }
+  }, [data, walletAddress]);
 
   useEffect(() => {
     setGaugesWithPower();
-  }, [data]);
+  }, [setGaugesWithPower]);
 
   async function requestAccount() {
     if (window.ethereum) {
