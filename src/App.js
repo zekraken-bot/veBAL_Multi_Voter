@@ -263,7 +263,7 @@ export default function App() {
           <a href="https://github.com/zekraken-bot/veBAL_Multi_Voter" target="_blank" rel="noopener noreferrer">
             github link
           </a>
-          &nbsp;|&nbsp;Disclaimer: use at your own discretion, I take no responsiblity for results
+          &nbsp;|&nbsp;Disclaimer: use at your discretion | Donations &#x1F49C; 0xd0E6C1d2295E2a9e1927D25dBe6C461A4D23c8B4
         </footer>
         <br />
       </>
