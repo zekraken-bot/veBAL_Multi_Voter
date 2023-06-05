@@ -4,6 +4,7 @@ import { ethers } from "ethers";
 import { Vote_ABI, Vote_address } from "./abi";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { CircularProgress } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Grid from "@mui/material/Grid";
@@ -12,9 +13,10 @@ import getServerData from "./components/fetchData";
 export default function App() {
   const [walletAddress, setWalletAddress] = useState("");
   const [buttonText, setButtonText] = useState("Connect Wallet");
-  const [gauges, setGauges] = useState(new Array(8).fill({ address: "0x0000000000000000000000000000000000000000", pool: { symbol: "" } }));
+  const [gauges, setGauges] = useState(new Array(8).fill());
   const [gaugeTexts, setGaugeTexts] = useState(new Array(8).fill(0));
   const [data, setData] = useState();
+  const [loading, setLoading] = useState(true);
 
   const theme = createTheme({
     status: {
@@ -32,28 +34,60 @@ export default function App() {
     },
   });
 
+  async function pullJSON() {
+    const responseData = await getServerData();
+    setData(responseData);
+  }
+
+  async function checkWalletonLoad() {
+    const accounts = await window.ethereum.request({
+      method: "eth_accounts",
+    });
+    if (accounts.length) {
+      console.log("Your wallet is connected");
+      setWalletAddress(accounts[0]);
+      setButtonText("Wallet Connected");
+    } else {
+      console.log("Metamask is not connected");
+    }
+  }
+
   useEffect(() => {
-    async function pullJSON() {
-      const responseData = await getServerData();
-      setData(responseData);
+    async function initialize() {
+      await checkWalletonLoad();
+      await pullJSON();
     }
 
-    async function checkWalletonLoad() {
-      const accounts = await window.ethereum.request({
-        method: "eth_accounts",
-      });
-      if (accounts.length) {
-        console.log("Your wallet is connected");
-        setWalletAddress(accounts[0]);
-        setButtonText("Wallet Connected");
-      } else {
-        console.log("Metamask is not connected");
-      }
-    }
-
-    pullJSON();
-    checkWalletonLoad();
+    initialize();
   }, []);
+
+  async function setGaugesWithPower() {
+    if (data) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = await provider.getSigner();
+      const erc20 = new ethers.Contract(Vote_address, Vote_ABI, signer);
+
+      let newGauges = [...gauges];
+      let newGaugeTexts = [...gaugeTexts];
+      let gaugeIndex = 0;
+
+      for (let i = 0; i < data.length && gaugeIndex < newGauges.length; i++) {
+        const gaugePower = await erc20.vote_user_slopes(walletAddress, data[i].address);
+        if (gaugePower.power > 0) {
+          newGauges[gaugeIndex] = data[i];
+          newGaugeTexts[gaugeIndex] = (gaugePower.power / 100).toString();
+          gaugeIndex++;
+        }
+      }
+      setGauges(newGauges);
+      setGaugeTexts(newGaugeTexts);
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    setGaugesWithPower();
+  }, [data]);
 
   async function requestAccount() {
     if (window.ethereum) {
@@ -92,7 +126,7 @@ export default function App() {
     const erc20 = new ethers.Contract(Vote_address, Vote_ABI, signer);
 
     let newGauges = [...gauges];
-    newGauges[i] = newValue === null ? { address: "0x0000000000000000000000000000000000000000", pool: { symbol: "" } } : newValue;
+    newGauges[i] = newValue === null ? null : newValue;
     setGauges(newGauges);
 
     if (newValue !== null) {
@@ -148,44 +182,51 @@ export default function App() {
             </div>
             <br />
             <div className="flex-item">
-              <Grid container spacing={1} justifyContent="center">
-                {gauges.map((gauge, i) => (
-                  <React.Fragment key={i}>
-                    <Grid item xs={7}>
-                      <Autocomplete
-                        onChange={(event, newValue) => {
-                          onGaugeChange(i, newValue);
-                        }}
-                        id={`address_box_${i}`}
-                        ListboxProps={{ sx: { fontSize: 12 } }}
-                        options={data || []}
-                        getOptionLabel={(option) =>
-                          JSON.stringify([option.pool.symbol, "|", option.address, "|", option.network, "|", option.newTag, "| Symbols: ", option.pool.tokens], null, " ").replace(
-                            /]|[[]|"|,/g,
-                            ""
-                          )
-                        }
-                        sx={{ maxWidth: 800 }}
-                        renderInput={(params) => <TextField {...params} label={`Select Gauge #${i + 1}`} />}
-                        isOptionEqualToValue={(option, value) => option?.address === value?.address}
-                      />
-                    </Grid>
-                    <Grid item xs={1}>
-                      <TextField
-                        id={`vote_textbox_${i}`}
-                        label="Weight"
-                        value={gaugeTexts[i]}
-                        onChange={(newValueText) => {
-                          let newValue = isNaN(parseInt(newValueText.target.value)) ? 0 : newValueText.target.value;
-                          let newGaugeTexts = [...gaugeTexts];
-                          newGaugeTexts[i] = newValue;
-                          setGaugeTexts(newGaugeTexts);
-                        }}
-                      />
-                    </Grid>
-                  </React.Fragment>
-                ))}
-              </Grid>
+              {loading ? (
+                <CircularProgress />
+              ) : (
+                <Grid container spacing={1} justifyContent="center">
+                  {gauges.map((gauge, i) => (
+                    <React.Fragment key={i}>
+                      <Grid item xs={7}>
+                        <Autocomplete
+                          key={`autocomplete-${i}-${gauges[i]?.address || "empty"}`}
+                          onChange={(event, newValue) => {
+                            onGaugeChange(i, newValue);
+                          }}
+                          id={`address_box_${i}`}
+                          ListboxProps={{ sx: { fontSize: 12 } }}
+                          options={data || []}
+                          getOptionLabel={(option) =>
+                            JSON.stringify(
+                              [option.pool.symbol, "|", option.address, "|", option.network, "|", option.newTag, "| Symbols: ", option.pool.tokens],
+                              null,
+                              " "
+                            ).replace(/]|[[]|"|,/g, "")
+                          }
+                          sx={{ maxWidth: 800 }}
+                          renderInput={(params) => <TextField {...params} label={`Select Gauge #${i + 1}`} />}
+                          isOptionEqualToValue={(option, value) => option?.address === value?.address}
+                          value={gauges[i]}
+                        />
+                      </Grid>
+                      <Grid item xs={1}>
+                        <TextField
+                          id={`vote_textbox_${i}`}
+                          label="Weight"
+                          value={gaugeTexts[i]}
+                          onChange={(newValueText) => {
+                            let newValue = isNaN(parseInt(newValueText.target.value)) ? 0 : newValueText.target.value;
+                            let newGaugeTexts = [...gaugeTexts];
+                            newGaugeTexts[i] = newValue;
+                            setGaugeTexts(newGaugeTexts);
+                          }}
+                        />
+                      </Grid>
+                    </React.Fragment>
+                  ))}
+                </Grid>
+              )}
 
               <br />
               <table className="validationTable">
