@@ -112,7 +112,14 @@ export default function App() {
     const signer = await provider.getSigner();
     const erc20 = new ethers.Contract(Vote_address, Vote_ABI, signer);
 
-    const addresses = gauges.map((gauge) => gauge.address.slice(2, 42));
+    const updatedGauges = gauges.map((gauge) => {
+      if (gauge === undefined) {
+        return { address: "0x0000000000000000000000000000000000000000" };
+      }
+      return gauge;
+    });
+
+    const addresses = updatedGauges.map((gauge) => gauge.address.slice(2, 42));
     const weights = gaugeTexts.map((text) => parseInt(text) * 100);
 
     await erc20.vote_for_many_gauge_weights(addresses, weights);
@@ -163,7 +170,7 @@ export default function App() {
             <div>
               Usage Notes:
               <ul>
-                <li>Make sure your wallet is connected</li>
+                <li>Make sure your wallet is connected to mainnet</li>
                 <li>Killed gauges are not in the dropdown selector</li>
                 <li>Type-ahead is available for quick searching</li>
                 <li>8 gauge changes supported at one time, make sure to reduce votes to a gauge in order to vote elsewhere (unless you have free voting power) </li>
@@ -175,15 +182,20 @@ export default function App() {
               Examples:
               <ol>
                 <li>These examples assume "gauge #1" is currently at 100% and isn't vote locked</li>
-                <li>Decrease "gauge #1" to 0, increase "gauge 2" to 100; this moves 100% of your vote from one gauge to another</li>
-                <li>Decrease "gauge #1" to 0, increase "gauge 2" to 50, increase "gauge #3" to 50; this moves 100% of your vote from one gauge to two others</li>
-                <li>Decrease "gauge #1" to 50, increase "gauge 2" to 25, increase "gauge #3" to 25; this moves 50% of your vote from one gauge to two others</li>
+                <li>Decrease "gauge #1" to 0, increase "gauge 2" to 100; this moves 100% of your vote from one gauge to the other</li>
+                <li>Decrease "gauge #1" to 0, increase "gauge 2" to 50, increase "gauge #3" to 50; this moves 100% of your vote from one gauge to the two others</li>
+                <li>Decrease "gauge #1" to 50, increase "gauge 2" to 25, increase "gauge #3" to 25; this moves 50% of your vote from one gauge to the two others</li>
               </ol>
             </div>
             <br />
             <div className="flex-item">
               {loading ? (
-                <CircularProgress />
+                <div>
+                  <CircularProgress />
+                  <p>
+                    <span className="big">loading gauge votes, please wait approx. 5 seconds...</span>
+                  </p>
+                </div>
               ) : (
                 <Grid container spacing={1} justifyContent="center">
                   {gauges.map((gauge, i) => (
@@ -255,13 +267,13 @@ export default function App() {
           </div>
         </div>
         <footer className="footer">
-          Open source project created by&nbsp;
+          created by&nbsp;
           <a href="https://twitter.com/The_Krake" target="_blank" rel="noopener noreferrer">
             @ZeKraken
           </a>
-          &nbsp;|&nbsp;
+          &nbsp;| open source:&nbsp;
           <a href="https://github.com/zekraken-bot/veBAL_Multi_Voter" target="_blank" rel="noopener noreferrer">
-            github link
+            github
           </a>
           &nbsp;|&nbsp;Disclaimer: use at your discretion | Donations &#x1F49C; 0xd0E6C1d2295E2a9e1927D25dBe6C461A4D23c8B4
         </footer>
